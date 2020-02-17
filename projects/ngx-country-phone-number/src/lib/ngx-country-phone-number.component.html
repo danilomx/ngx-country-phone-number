@@ -9,12 +9,8 @@
                 </div>
                 <div class="scrollable-menu">
                     <a class="dropdown-item" href="#" *ngFor="let country of countryList"
-                        (click)="onCountrySelect(country)">{{ country.name }}</a>
+                        (click)="onCountrySelect(country)">{{ country.name }} (+{{ country.code }})</a>
                 </div>
-                <button class="btn btn-radius btn-primary" >
-                    <i class="fa fa-floppy-o"></i>
-                    Limpiar
-                  </button>
             </div>
         </div>
     </div>
