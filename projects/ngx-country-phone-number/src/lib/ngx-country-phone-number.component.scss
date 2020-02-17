@@ -1,0 +1,14 @@
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+.search-container {
+	position: relative; 
+}
+.search-container input {
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	padding-left: 10px;
+}

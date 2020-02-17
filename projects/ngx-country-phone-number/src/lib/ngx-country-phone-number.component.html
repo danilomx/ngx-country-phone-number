@@ -1,0 +1,56 @@
+<!-- <div class="intl-tel-input allow-dropdown" >
+    <div class="flag-container" dropdown >
+      <div class="selected-flag dropdown-toggle" dropdownToggle>
+        <div class="iti-flag" ></div>
+        <div class="selected-dial-code">+ select -->
+<!-- {{selectedCountry.dialCode}} -->
+<!-- </div>
+        <div class="iti-arrow"></div>
+      </div>
+      <div class="dropdown-menu country-dropdown">
+        <div class="search-container" >
+          <input id="country-search-box" [placeholder]="searchCountryPlaceholder" autofocus>
+        </div>
+        <ul class="country-list" #countryList> -->
+<!-- <li class="country" *ngFor="let country of preferredCountriesInDropDown"
+            (click)="onCountrySelect(country, focusable)" [id]="country.iso2">
+            <div class="flag-box">
+              <div class="iti-flag" [ngClass]="country.flagClass"></div>
+            </div>
+            <span class="country-name">{{country.name}}</span>
+            <span class="dial-code">+{{country.dialCode}}</span>
+          </li>
+          <li class="divider" *ngIf="preferredCountriesInDropDown?.length"></li> -->
+<!-- <li class="country" *ngFor="let country of allCountries">
+            <div class="flag-box">
+              <div class="iti-flag"></div>
+            </div>
+            <span class="country-name">{{country.name}}</span>
+            <span class="dial-code">+{{country.code}}</span>
+          </li> 
+        </ul>
+      </div>
+    </div> -->
+<!-- <input type="tel" id="phone" autocomplete="off" [ngClass]="cssClass" (blur)="onTouched()"
+      (keypress)="onInputKeyPress($event)" [(ngModel)]="phoneNumber" (ngModelChange)="onPhoneNumberChange()"
+      [disabled]="disabled" [placeholder]="separateDialCodePlaceHolder(selectedCountry?.placeHolder || '')"
+      [attr.maxLength]="maxLength" [attr.validation]="phoneValidation" #focusable> -->
+<!-- </div> -->
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <div class="dropdown">
+            <span class="input-group-text dropdown-toggle" id="basic-addon1" id="dropdownMenuButton"
+                data-toggle="dropdown">@</span>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="search-container">
+                    <input id="country-search-box" placeholder="Buscar" autofocus>
+                </div>
+                <div class="scrollable-menu">
+                    <a class="dropdown-item" href="#" *ngFor="let country of allCountries">{{ country.name }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="text" class="form-control" placeholder="0000 0000" aria-label="Username"
+        aria-describedby="basic-addon1">
+</div>
