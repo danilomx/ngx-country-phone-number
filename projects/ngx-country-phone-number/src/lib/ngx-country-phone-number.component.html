@@ -8,11 +8,12 @@
                     <input id="country-search-box" placeholder="Buscar" autofocus>
                 </div>
                 <div class="scrollable-menu">
-                    <a class="dropdown-item" href="#" *ngFor="let country of countryList">{{ country.name }}</a>
+                    <a class="dropdown-item" href="#" *ngFor="let country of countryList"
+                        (click)="onCountrySelect(country)">{{ country.name }}</a>
                 </div>
             </div>
         </div>
     </div>
-    <input type="text" class="form-control" placeholder="0000 0000" (keypress)="onInputKeyPress($event)" aria-label="Username"
-    [attr.maxLength]="maxLength">
+    <input type="text" class="form-control" placeholder="0000 0000" (keypress)="onInputKeyPress($event)" (change)="onChanged($event)"
+        aria-label="Username" [attr.maxLength]="maxLength">
 </div>
