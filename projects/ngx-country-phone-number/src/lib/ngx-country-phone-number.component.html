@@ -2,7 +2,7 @@
     <div class="input-group-prepend">
         <div class="dropdown">
             <span class="input-group-text dropdown-toggle" id="basic-addon1" id="dropdownMenuButton"
-                data-toggle="dropdown">@</span>
+                data-toggle="dropdown">+{{this.selectedCountry ? this.selectedCountry.code : ''}}</span>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div class="search-container">
                     <input id="country-search-box" placeholder="Buscar" autofocus>
@@ -11,9 +11,13 @@
                     <a class="dropdown-item" href="#" *ngFor="let country of countryList"
                         (click)="onCountrySelect(country)">{{ country.name }}</a>
                 </div>
+                <button class="btn btn-radius btn-primary" >
+                    <i class="fa fa-floppy-o"></i>
+                    Limpiar
+                  </button>
             </div>
         </div>
     </div>
-    <input type="text" class="form-control" placeholder="0000 0000" (keypress)="onInputKeyPress($event)" (change)="onChanged($event)"
-        aria-label="Username" [attr.maxLength]="maxLength">
+    <input type="text" class="form-control" placeholder="0000 0000" (keypress)="onInputKeyPress($event)" 
+        aria-label="Username" [attr.maxLength]="maxLength" [(ngModel)]="value" (ngModelChange)="onPhoneNumberChange()">
 </div>

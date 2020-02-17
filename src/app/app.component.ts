@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
   ];
   ngOnInit() {
     this.formGroup = new FormGroup({
-      FileUp: new FormControl(null, {
+      pn: new FormControl(null, {
         validators: [Validators.required]
       })
     });

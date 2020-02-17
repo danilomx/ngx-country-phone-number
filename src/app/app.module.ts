@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { NgxCountryPhoneNumberModule } from '../../projects/ngx-country-phone-number/src/lib/ngx-country-phone-number.module';
 import { AppComponent } from './app.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -10,7 +12,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    NgxCountryPhoneNumberModule
+    NgxCountryPhoneNumberModule,
+    CommonModule,
+    FormsModule, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

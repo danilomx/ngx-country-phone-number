@@ -1,5 +1,9 @@
-<ngx-country-phone-number [countryList]="countryList" formControlName="FileUp" ></ngx-country-phone-number> 
-<button class="btn btn-radius btn-primary" (click)="guardar()" >
+<form>
+  <div [formGroup]="formGroup">
+    <ngx-country-phone-number [countryList]="countryList" formControlName="pn"></ngx-country-phone-number>
+  </div>
+</form>
+<button class="btn btn-radius btn-primary" (click)="guardar()">
   <i class="fa fa-floppy-o"></i>
   Guardar
 </button>

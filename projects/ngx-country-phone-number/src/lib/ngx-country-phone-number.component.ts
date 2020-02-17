@@ -1,13 +1,28 @@
-import { Component, OnInit, forwardRef, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms';
-import { CountryModel } from './country.model';
-import { PhoneNumberModel } from './phoneNumber.model';
-import { noop } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  forwardRef,
+  Input,
+  ViewChild,
+  ElementRef,
+  SimpleChanges,
+  OnChanges,
+  Output,
+  Injector
+} from "@angular/core";
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  NgControl
+} from "@angular/forms";
+import { CountryModel } from "./country.model";
+import { PhoneNumberModel } from "./phoneNumber.model";
+import { noop } from "rxjs";
 
 @Component({
   selector: "ngx-country-phone-number",
-  templateUrl: './ngx-country-phone-number.component.html',
-  styleUrls: ['./ngx-country-phone-number.component.scss'],
+  templateUrl: "./ngx-country-phone-number.component.html",
+  styleUrls: ["./ngx-country-phone-number.component.scss"],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -20,16 +35,27 @@ export class NgxCountryPhoneNumberComponent
   implements ControlValueAccessor, OnInit {
   @Input() maxLength = 8;
   @Input() countryList: Array<CountryModel>;
-  phone: PhoneNumberModel;
-
+  phoneNumber: PhoneNumberModel;
+  selectedCountry: CountryModel;
+  value = "";
   private onTouched: () => void = noop;
   private onChange: (_: any) => void = noop;
 
   public ngControl: NgControl;
 
+  constructor(
+    private inj: Injector,
+    private host: ElementRef<HTMLInputElement>
+  ) {}
+
+  ngOnInit() {
+    // tslint:disable-next-line: deprecation
+    this.ngControl = this.inj.get(NgControl);
+  }
+
   writeValue(newPhoneModel: any) {
     if (newPhoneModel) {
-      this.phone = newPhoneModel;
+      this.phoneNumber = newPhoneModel;
     }
   }
   registerOnChange(fn: any): void {
@@ -43,31 +69,43 @@ export class NgxCountryPhoneNumberComponent
   inputBlur($event) {
     this.onTouched();
   }
-  constructor() {}
 
-  ngOnInit() {}
-
-  onChanged($event) {
-   console.log($event);
+  onPhoneNumberChange() {
+    this.phoneNumberValue();
   }
 
-  public onCountrySelect(country: CountryModel): void {
-    console.log(country);
+  phoneNumberValue() {
+    try {
+      if (this.selectedCountry && this.value.length > 0) {
+        this.phoneNumber = {
+          idCountry: this.selectedCountry.id,
+          number: Number(this.value)
+        }
+      } else {
+        this.phoneNumber = null;
+      }
+      this.onChange(this.phoneNumber);
+    } catch (error) {}
   }
 
-  public onInputKeyPress(event: KeyboardEvent): void {
+  onCountrySelect(country: CountryModel): void {
+    this.selectedCountry = country;
+    this.phoneNumberValue();
+  }
+
+  onInputKeyPress(event: KeyboardEvent): void {
     const allowedChars = /[0-9\+\-\ ]/;
     const allowedCtrlChars = /[axcv]/; // Allows copy-pasting
     const allowedOtherKeys = [
-      'ArrowLeft',
-      'ArrowUp',
-      'ArrowRight',
-      'ArrowDown',
-      'Home',
-      'End',
-      'Insert',
-      'Delete',
-      'Backspace'
+      "ArrowLeft",
+      "ArrowUp",
+      "ArrowRight",
+      "ArrowDown",
+      "Home",
+      "End",
+      "Insert",
+      "Delete",
+      "Backspace"
     ];
 
     if (
@@ -75,8 +113,6 @@ export class NgxCountryPhoneNumberComponent
       !(event.ctrlKey && allowedCtrlChars.test(event.key)) &&
       !allowedOtherKeys.includes(event.key)
     ) {
-
-      console.log()
       event.preventDefault();
     }
   }
