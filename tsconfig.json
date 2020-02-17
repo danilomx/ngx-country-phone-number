@@ -17,7 +17,17 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-country-phone-number": [
+        "dist/ngx-country-phone-number",
+        "dist/ngx-country-phone-number"
+      ],
+      "ngx-country-phone-number/*": [
+        "dist/ngx-country-phone-number/*",
+        "dist/ngx-country-phone-number/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

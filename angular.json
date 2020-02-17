@@ -124,6 +124,41 @@
           }
         }
       }
+    },
+    "ngx-country-phone-number": {
+      "projectType": "library",
+      "root": "projects/ngx-country-phone-number",
+      "sourceRoot": "projects/ngx-country-phone-number/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-country-phone-number/tsconfig.lib.json",
+            "project": "projects/ngx-country-phone-number/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-country-phone-number/src/test.ts",
+            "tsConfig": "projects/ngx-country-phone-number/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-country-phone-number/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-country-phone-number/tsconfig.lib.json",
+              "projects/ngx-country-phone-number/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "ngxcountryphonenumber"
 }
