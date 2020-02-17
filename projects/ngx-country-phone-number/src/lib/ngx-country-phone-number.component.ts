@@ -1,5 +1,6 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
+import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { CountryModel } from './country.model';
 
 @Component({
   selector: "ngx-country-phone-number",
@@ -15,63 +16,43 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 })
 export class NgxCountryPhoneNumberComponent
   implements ControlValueAccessor, OnInit {
-  public allCountries = [
-    {
-      name: 'Costa Rica',
-      iso: 'CR',
-      code: 506
-    },
-    {
-      name: 'Nicaragua',
-      iso: 'NI',
-      code: 505
-    },
-    {
-      name: 'Costa Rica',
-      iso: 'CR',
-      code: 506
-    },
-    {
-      name: 'Nicaragua',
-      iso: 'NI',
-      code: 505
-    },
-    {
-      name: 'Costa Rica',
-      iso: 'CR',
-      code: 506
-    },
-    {
-      name: 'Nicaragua',
-      iso: 'NI',
-      code: 505
-    },
-    {
-      name: 'Costa Rica',
-      iso: 'CR',
-      code: 506
-    },
-    {
-      name: 'Nicaragua',
-      iso: 'NI',
-      code: 505
-    }
-  ];
+  @Input() maxLength = 8;
+  @Input() countryList: Array<CountryModel>;
 
   writeValue(obj: any): void {
-    //throw new Error('Method not implemented.');
   }
   registerOnChange(fn: any): void {
-    //throw new Error('Method not implemented.');
   }
   registerOnTouched(fn: any): void {
-    //throw new Error('Method not implemented.');
   }
   setDisabledState?(isDisabled: boolean): void {
-    //throw new Error('Method not implemented.');
   }
 
   constructor() {}
 
   ngOnInit() {}
+
+  public onInputKeyPress(event: KeyboardEvent): void {
+    const allowedChars = /[0-9\+\-\ ]/;
+    const allowedCtrlChars = /[axcv]/; // Allows copy-pasting
+    const allowedOtherKeys = [
+      'ArrowLeft',
+      'ArrowUp',
+      'ArrowRight',
+      'ArrowDown',
+      'Home',
+      'End',
+      'Insert',
+      'Delete',
+      'Backspace'
+    ];
+
+    if (
+      !allowedChars.test(event.key) &&
+      !(event.ctrlKey && allowedCtrlChars.test(event.key)) &&
+      !allowedOtherKeys.includes(event.key)
+    ) {
+      event.preventDefault();
+    }
+  }
 }
