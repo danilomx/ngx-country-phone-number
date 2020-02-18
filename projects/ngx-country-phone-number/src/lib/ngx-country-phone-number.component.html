@@ -11,13 +11,9 @@
                     <a class="dropdown-item" href="#" *ngFor="let country of countryList"
                         (click)="onCountrySelect(country)">{{ country.name }}</a>
                 </div>
-                <button class="btn btn-radius btn-primary" >
-                    <i class="fa fa-floppy-o"></i>
-                    Limpiar
-                  </button>
             </div>
         </div>
     </div>
-    <input type="text" class="form-control" placeholder="0000 0000" (keypress)="onInputKeyPress($event)" 
-        aria-label="Username" [attr.maxLength]="maxLength" [(ngModel)]="value" (ngModelChange)="onPhoneNumberChange()">
+    <input type="text" class="form-control" [placeholder]="mask" (keypress)="onInputKeyPress($event)"  [mask]="mask"
+        aria-label="Username" [(ngModel)]="value" (ngModelChange)="onPhoneNumberChange()">
 </div>

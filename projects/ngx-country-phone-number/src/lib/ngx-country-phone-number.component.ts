@@ -38,6 +38,7 @@ export class NgxCountryPhoneNumberComponent
   phoneNumber: PhoneNumberModel;
   selectedCountry: CountryModel;
   value = "";
+  mask = "(000) 000-0000";
   private onTouched: () => void = noop;
   private onChange: (_: any) => void = noop;
 
@@ -56,6 +57,10 @@ export class NgxCountryPhoneNumberComponent
   writeValue(newPhoneModel: any) {
     if (newPhoneModel) {
       this.phoneNumber = newPhoneModel;
+      this.value = newPhoneModel.number;
+
+      this.selectedCountry = this.countryList.find(item=>item.id === newPhoneModel.idCountry)
+      this.mask = this.selectedCountry.mask;
     }
   }
   registerOnChange(fn: any): void {
@@ -76,10 +81,10 @@ export class NgxCountryPhoneNumberComponent
 
   phoneNumberValue() {
     try {
-      if (this.selectedCountry && this.value.length > 0) {
+      if (this.selectedCountry && this.value) {
         this.phoneNumber = {
           idCountry: this.selectedCountry.id,
-          number: Number(this.value)
+          number: this.value
         }
       } else {
         this.phoneNumber = null;
@@ -90,6 +95,8 @@ export class NgxCountryPhoneNumberComponent
 
   onCountrySelect(country: CountryModel): void {
     this.selectedCountry = country;
+
+    this.mask = country.mask;
     this.phoneNumberValue();
   }
 

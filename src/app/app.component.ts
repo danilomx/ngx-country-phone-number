@@ -15,13 +15,15 @@ export class AppComponent implements OnInit {
       id: 1,
       name: 'Costa Rica',
       iso: 'CR',
-      code: 506
+      code: 506,
+      mask: '00-000-00'
     },
     {
       id: 2,
       name: 'Nicaragua',
       iso: 'NI',
-      code: 505
+      code: 505,
+      mask: '0000-0000'
     }
   ];
   ngOnInit() {
@@ -31,6 +33,13 @@ export class AppComponent implements OnInit {
       })
     });
 
+    this.formGroup.patchValue({ pn:
+    {
+      idCountry: 2,
+      number: '85728298'
+    }
+    });
+    
   }
 
   guardar() {
