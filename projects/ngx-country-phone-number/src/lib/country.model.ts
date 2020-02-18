@@ -3,4 +3,5 @@ export interface CountryModel {
     name: string;
     iso: string;
     code: string;
+    mask: string;
 }

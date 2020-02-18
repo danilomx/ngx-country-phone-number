@@ -15,22 +15,31 @@ export class AppComponent implements OnInit {
       id: 1,
       name: 'Costa Rica',
       iso: 'CR',
-      code: 506
+      code: 506,
+      mask: '00-0000-0000'
     },
     {
       id: 2,
       name: 'Nicaragua',
       iso: 'NI',
-      code: 505
+      code: 505,
+      mask: '0000-0000'
     }
   ];
   ngOnInit() {
     this.formGroup = new FormGroup({
       pn: new FormControl(null, {
         validators: [Validators.required]
+      }),
+      pn1: new FormControl(null, {
+        validators: [Validators.required]
       })
     });
 
+    // this.formGroup.patchValue({ pn:  {
+    //   idCountry: 2,
+    //   number: 85728298
+    // }});
   }
 
   guardar() {

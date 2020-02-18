@@ -5,7 +5,7 @@
                 data-toggle="dropdown">+{{this.selectedCountry ? this.selectedCountry.code : ''}}</span>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div class="search-container">
-                    <input id="country-search-box" placeholder="Buscar" autofocus>
+                    <input id="country-search-box" class="form-control" placeholder="Buscar" autofocus>
                 </div>
                 <div class="scrollable-menu">
                     <a class="dropdown-item" href="#" *ngFor="let country of countryList"
@@ -14,6 +14,5 @@
             </div>
         </div>
     </div>
-    <input type="text" class="form-control" placeholder="0000 0000" (keypress)="onInputKeyPress($event)" 
-        aria-label="Username" [attr.maxLength]="maxLength" [(ngModel)]="value" (ngModelChange)="onPhoneNumberChange()">
+    <input type="text" class="form-control" placeholder="{{this.selectedCountry ? this.selectedCountry.mask : ''}}"  [(ngModel)]="value"  #fileInput (ngModelChange)="onPhoneNumberChange()">
 </div>
