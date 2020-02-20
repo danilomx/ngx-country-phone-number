@@ -14,5 +14,10 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <input type="text" class="form-control" placeholder="{{this.selectedCountry ? this.selectedCountry.mask : ''}}"  [(ngModel)]="value"  #fileInput (ngModelChange)="onPhoneNumberChange()">
+=======
+    <input type="text" class="form-control" [placeholder]="mask" (keypress)="onInputKeyPress($event)"  [mask]="mask"
+        aria-label="Username" [(ngModel)]="value" (ngModelChange)="onPhoneNumberChange()">
+>>>>>>> 31e29f8f68939b7c3f4e6cd3491c593aac0d5309
 </div>

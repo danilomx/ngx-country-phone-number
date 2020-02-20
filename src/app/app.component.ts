@@ -16,7 +16,11 @@ export class AppComponent implements OnInit {
       name: 'Costa Rica',
       iso: 'CR',
       code: 506,
+<<<<<<< HEAD
       mask: '00-0000-0000'
+=======
+      mask: '00-000-00'
+>>>>>>> 31e29f8f68939b7c3f4e6cd3491c593aac0d5309
     },
     {
       id: 2,
@@ -36,10 +40,20 @@ export class AppComponent implements OnInit {
       })
     });
 
+<<<<<<< HEAD
     // this.formGroup.patchValue({ pn:  {
     //   idCountry: 2,
     //   number: 85728298
     // }});
+=======
+    this.formGroup.patchValue({ pn:
+    {
+      idCountry: 2,
+      number: '85728298'
+    }
+    });
+    
+>>>>>>> 31e29f8f68939b7c3f4e6cd3491c593aac0d5309
   }
 
   guardar() {

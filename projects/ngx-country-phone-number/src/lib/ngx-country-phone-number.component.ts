@@ -41,9 +41,8 @@ export class NgxCountryPhoneNumberComponent
   @Input() countryList: Array<CountryModel>;
   phoneNumber: PhoneNumberModel;
   selectedCountry: CountryModel;
-  value = '';
-  masks = '{mask: \'+{7}(000)000-00-00\'}';
-  @ViewChild('fileInput', {read: ElementRef}) fileInput: ElementRef;
+  value = "";
+  mask = "";
   private onTouched: () => void = noop;
   private onChange: (_: any) => void = noop;
   digitsMask;
@@ -71,9 +70,9 @@ export class NgxCountryPhoneNumberComponent
     // // get unmasked value
     // console.log(masked.validate);
 
-    this.digitsMask = IMask( this.fileInput.nativeElement, {
-      mask: '000-000-000'
-    });
+    // this.digitsMask = IMask( this.fileInput.nativeElement, {
+    //   mask: '000-000-000'
+    // });
   }
 
   writeValue(newPhoneModel: any) {
@@ -81,11 +80,8 @@ export class NgxCountryPhoneNumberComponent
       this.phoneNumber = newPhoneModel;
       this.value = newPhoneModel.number;
 
-      this.selectedCountry = this.countryList.find(
-        item => item.id === this.phoneNumber.idCountry
-      );
-
-      this.updatePhoneMask();
+      this.selectedCountry = this.countryList.find(item=>item.id === newPhoneModel.idCountry)
+      this.mask = this.selectedCountry.mask;
     }
   }
   registerOnChange(fn: any): void {
@@ -110,9 +106,7 @@ export class NgxCountryPhoneNumberComponent
         this.phoneNumber = {
           idCountry: this.selectedCountry.id,
           number: this.value
-        };
-        this.updatePhoneMask();
-
+        }
       } else {
         this.phoneNumber = null;
       }
@@ -122,14 +116,16 @@ export class NgxCountryPhoneNumberComponent
 
   updatePhoneMask() {
    // this.value = '';
-     this.fileInput.nativeElement.value = '';
-    this.digitsMask.updateOptions({
-      mask: this.selectedCountry.mask
-    });
+    //  this.fileInput.nativeElement.value = '';
+    // this.digitsMask.updateOptions({
+    //   mask: this.selectedCountry.mask
+    // });
   }
 
   onCountrySelect(country: CountryModel): void {
     this.selectedCountry = country;
+
+    this.mask = country.mask;
     this.phoneNumberValue();
   }
 
