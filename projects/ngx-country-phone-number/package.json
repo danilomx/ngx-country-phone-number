@@ -1,12 +1,12 @@
 {
   "name": "ngx-country-phone-number",
-  "version": "0.0.2",
+  "version": "0.0.24",
   "peerDependencies": {
     "@angular/common": "^8.2.14",
     "@angular/core": "^8.2.14",
-    "angular-imask": "^6.0.4"
+    "string-mask": "^0.3.0"
   },
   "dependencies": {
-    "ngx-mask": "^8.1.7"
+    
   }
 }

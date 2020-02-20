@@ -1,25 +1,10 @@
-import {
-  Component,
-  OnInit,
-  forwardRef,
-  Input,
-  ViewChild,
-  ElementRef,
-  SimpleChanges,
-  OnChanges,
-  Output,
-  Injector
-} from '@angular/core';
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  NgControl
-} from '@angular/forms';
+import { Component, OnInit, forwardRef, Input } from '@angular/core';
+import { NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { CountryModel } from './country.model';
-import { PhoneNumberModel } from './phoneNumber.model';
+import { PhoneNumberModel } from './phone-number.model';
 import { noop } from 'rxjs';
-import IMask from 'imask';
-// import Inputmask from 'inputmask';
+import * as StringMask from 'string-mask';
+import extractNumbers from './only-numbers';
 // import RandExp from './randexp';
 
 declare var $: any;
@@ -35,53 +20,41 @@ declare var $: any;
     }
   ]
 })
-export class NgxCountryPhoneNumberComponent
-  implements ControlValueAccessor, OnInit {
+export class NgxCountryPhoneNumberComponent implements OnInit {
   @Input() maxLength = 8;
   @Input() countryList: Array<CountryModel>;
+  @Input() placeholder = '';
+  @Input() selectedCountry: CountryModel = null;
+  value = '';
+  countrySearchText = '';
   phoneNumber: PhoneNumberModel;
-  selectedCountry: CountryModel;
-  value = "";
-  mask = "";
+  defaultCountryList: Array<CountryModel>;
   private onTouched: () => void = noop;
   private onChange: (_: any) => void = noop;
-  digitsMask;
 
   public ngControl: NgControl;
 
-  constructor(
-    private inj: Injector,
-    private host: ElementRef<HTMLInputElement>
-  ) {}
+  constructor() {}
 
   ngOnInit() {
-    // tslint:disable-next-line: deprecation
-    this.ngControl = this.inj.get(NgControl);
-
-    // const masked = IMask.createMask({
-    //   mask: '+7 (000) 000-00-00',
-    //   // ...and other options
-    // });
-
-    // const maskedValue = masked.resolve('71234567890');
-
-    // // mask keeps state after resolving
-    // console.log(masked.value);  // same as maskedValue
-    // // get unmasked value
-    // console.log(masked.validate);
-
-    // this.digitsMask = IMask( this.fileInput.nativeElement, {
-    //   mask: '000-000-000'
-    // });
+    console.log(this.countryList)
+    this.defaultCountryList = this.countryList;
   }
 
   writeValue(newPhoneModel: any) {
-    if (newPhoneModel) {
+    if (!newPhoneModel) {
+      return;
+    }
+
+    if (newPhoneModel.idCountry) {
       this.phoneNumber = newPhoneModel;
       this.value = newPhoneModel.number;
-
-      this.selectedCountry = this.countryList.find(item=>item.id === newPhoneModel.idCountry)
-      this.mask = this.selectedCountry.mask;
+      this.selectedCountry = this.countryList.find(
+        item => item.id === newPhoneModel.idCountry
+      );
+      const formatter = new StringMask(this.selectedCountry.mask);
+      this.value = formatter.apply(this.phoneNumber.number).toString(); // +55 (31) 2222-2222
+      this.maxLength = this.selectedCountry.mask.length;
     }
   }
   registerOnChange(fn: any): void {
@@ -96,7 +69,8 @@ export class NgxCountryPhoneNumberComponent
     this.onTouched();
   }
 
-  onPhoneNumberChange() {
+  onPhoneNumberChange(newValue) {
+    this.value = newValue;
     this.phoneNumberValue();
   }
 
@@ -106,7 +80,13 @@ export class NgxCountryPhoneNumberComponent
         this.phoneNumber = {
           idCountry: this.selectedCountry.id,
           number: this.value
-        }
+        };
+
+        const formatter = new StringMask(this.selectedCountry.mask);
+        this.value = formatter.apply(
+          extractNumbers(this.phoneNumber.number, null)
+        ); // +55 (31) 2222-2222 /[1-4]/g
+        this.maxLength = this.selectedCountry.mask.length;
       } else {
         this.phoneNumber = null;
       }
@@ -114,23 +94,61 @@ export class NgxCountryPhoneNumberComponent
     } catch (error) {}
   }
 
-  updatePhoneMask() {
-   // this.value = '';
-    //  this.fileInput.nativeElement.value = '';
-    // this.digitsMask.updateOptions({
-    //   mask: this.selectedCountry.mask
-    // });
-  }
-
-  onCountrySelect(country: CountryModel): void {
+  onCountrySelect(event: any, country: CountryModel): void {
     this.selectedCountry = country;
-
-    this.mask = country.mask;
+    this.placeholder = country.mask;
     this.phoneNumberValue();
   }
 
+  searchCountry() {
+
+    if (this.countrySearchText && this.defaultCountryList) {
+      this.countryList = this.defaultCountryList.filter(
+        item =>
+          item.name
+            .toString()
+            .toLowerCase()
+            .startsWith(this.countrySearchText.toLowerCase()) ||
+          item.name
+            .toString()
+            .toLowerCase()
+            .endsWith(this.countrySearchText.toLowerCase()) ||
+          item.name
+            .toString()
+            .toLowerCase()
+            .includes(this.countrySearchText.toLowerCase()) ||
+          item.code
+            .toString()
+            .toLowerCase()
+            .startsWith(this.countrySearchText.toLowerCase()) ||
+          item.code
+            .toString()
+            .toLowerCase()
+            .endsWith(this.countrySearchText.toLowerCase()) ||
+          item.code
+            .toString()
+            .toLowerCase()
+            .includes(this.countrySearchText.toLowerCase()) ||
+          item.iso
+            .toString()
+            .toLowerCase()
+            .startsWith(this.countrySearchText.toLowerCase()) ||
+          item.iso
+            .toString()
+            .toLowerCase()
+            .endsWith(this.countrySearchText.toLowerCase()) ||
+          item.iso
+            .toString()
+            .toLowerCase()
+            .includes(this.countrySearchText.toLowerCase())
+      );
+    } else {
+      this.countryList = this.defaultCountryList;
+    }
+  }
+
   onInputKeyPress(event: KeyboardEvent): void {
-    const allowedChars = /[0-9\+\-\ ]/;
+    const allowedChars = /[0-9]/;
     const allowedCtrlChars = /[axcv]/; // Allows copy-pasting
     const allowedOtherKeys = [
       'ArrowLeft',

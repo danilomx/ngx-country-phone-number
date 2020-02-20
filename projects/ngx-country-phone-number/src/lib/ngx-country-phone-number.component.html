@@ -2,18 +2,22 @@
     <div class="input-group-prepend">
         <div class="dropdown">
             <span class="input-group-text dropdown-toggle" id="basic-addon1" id="dropdownMenuButton"
-                data-toggle="dropdown">+{{this.selectedCountry ? this.selectedCountry.code : ''}}</span>
+                data-toggle="dropdown">
+                <div [attr.class]="this.selectedCountry ? this.selectedCountry.icon : ''"></div>+{{this.selectedCountry ? this.selectedCountry.code : ''}}
+            </span>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div class="search-container">
-                    <input id="country-search-box" class="form-control" placeholder="Buscar" autofocus>
+                    <input id="country-search-box" [(ngModel)]="countrySearchText" (keyup)="searchCountry()"
+                        class="form-control" placeholder="Buscar" autofocus>
                 </div>
                 <div class="scrollable-menu">
-                    <a class="dropdown-item" href="#" *ngFor="let country of countryList"
-                        (click)="onCountrySelect(country)">{{ country.name }} (+{{ country.code }})</a>
+                   <a class="dropdown-item" *ngFor="let country of countryList"
+                        (click)="onCountrySelect($event, country)">{{ country.name }} (+{{ country.code }})</a>
                 </div>
             </div>
         </div>
     </div>
-    <input type="text" class="form-control" [placeholder]="mask" (keypress)="onInputKeyPress($event)"  [mask]="mask"
-        aria-label="Username" [(ngModel)]="value" (ngModelChange)="onPhoneNumberChange()">
+    <input type="text" class="form-control" [maxlength]="maxLength" [placeholder]="placeholder"
+        (keypress)="onInputKeyPress($event)" aria-label="Username" [(ngModel)]="value"
+        (ngModelChange)="onPhoneNumberChange($event)">
 </div>

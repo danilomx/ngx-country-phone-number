@@ -1,6 +1,6 @@
 <form>
   <div [formGroup]="formGroup">
-    <ngx-country-phone-number [countryList]="countryList" formControlName="pn"></ngx-country-phone-number>
+    <!-- <ngx-country-phone-number [countryList]="countryList" formControlName="pn"></ngx-country-phone-number> -->
     <ngx-country-phone-number [countryList]="countryList" formControlName="pn1"></ngx-country-phone-number>
   </div>
 </form>
@@ -8,3 +8,5 @@
   <i class="fa fa-floppy-o"></i>
   Guardar
 </button>
+
+<div><strong>Form value:</strong> <pre>{{ this.formGroup.value | json }}</pre></div>
