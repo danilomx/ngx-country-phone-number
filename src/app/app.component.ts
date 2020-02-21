@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
       // pn: new FormControl(null, {
       //   validators: [Validators.required]
       // }),
-      pn1: new FormControl(this.telefono, {
+      pn1: new FormControl(null, {
         validators: [Validators.required]
       })
     });

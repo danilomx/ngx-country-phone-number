@@ -1,12 +1,16 @@
 <form>
   <div [formGroup]="formGroup">
     <!-- <ngx-country-phone-number [countryList]="countryList" formControlName="pn"></ngx-country-phone-number> -->
-    <ngx-country-phone-number [countryList]="countryList" formControlName="pn1"></ngx-country-phone-number>
+    <ngx-country-phone-number validation="true" id="phone"  [countryList]="countryList" formControlName="pn1"></ngx-country-phone-number>
   </div>
 </form>
-<button class="btn btn-radius btn-primary" (click)="guardar()">
+<button [disabled]="formGroup.invalid" class="btn btn-radius btn-primary" (click)="guardar()">
   <i class="fa fa-floppy-o"></i>
   Guardar
 </button>
 
+<div><strong>Is input valid:</strong> <pre>{{ !this.formGroup.controls['pn1'].invalid }}</pre></div>
+<div><strong>Is input touched:</strong> <pre>{{ this.formGroup.controls['pn1'].touched }}</pre></div>
+<div><strong>Is form valid:</strong> <pre>{{ this.formGroup.valid }}</pre></div>
 <div><strong>Form value:</strong> <pre>{{ this.formGroup.value | json }}</pre></div>
+<div><strong>Form validation errors:</strong> <pre>{{ this.formGroup.controls['pn1'].errors | json }}</pre></div>

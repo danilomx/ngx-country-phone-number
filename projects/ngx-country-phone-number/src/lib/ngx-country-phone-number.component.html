@@ -1,14 +1,14 @@
 <div class="input-group mb-3">
     <div class="input-group-prepend">
-        <div class="dropdown">
-            <span class="input-group-text dropdown-toggle" id="basic-addon1" id="dropdownMenuButton"
+        <div class="dropdown input-group-text">
+            <span class="dropdown-toggle form-inline" id="basic-addon1" id="dropdownMenuButton"
                 data-toggle="dropdown">
                 <div [attr.class]="this.selectedCountry ? this.selectedCountry.icon : ''"></div>+{{this.selectedCountry ? this.selectedCountry.code : ''}}
             </span>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div class="search-container">
                     <input id="country-search-box" [(ngModel)]="countrySearchText" (keyup)="searchCountry()"
-                        class="form-control" placeholder="Buscar" autofocus>
+                        class="form-control" [placeholder]="placeholderSearch" autofocus>
                 </div>
                 <div class="scrollable-menu">
                    <a class="dropdown-item" *ngFor="let country of countryList"
@@ -17,7 +17,8 @@
             </div>
         </div>
     </div>
-    <input type="text" class="form-control" [maxlength]="maxLength" [placeholder]="placeholder"
+    <input type="text" [id]="id" class="form-control" [maxlength]="maxLength" 
+        name='phone'
         (keypress)="onInputKeyPress($event)" aria-label="Username" [(ngModel)]="value"
-        (ngModelChange)="onPhoneNumberChange($event)">
+        (ngModelChange)="onPhoneNumberChange($event)" phoneValidateDirective>
 </div>

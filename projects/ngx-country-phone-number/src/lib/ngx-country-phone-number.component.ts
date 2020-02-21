@@ -1,10 +1,11 @@
 import { Component, OnInit, forwardRef, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, NgControl, NG_VALIDATORS } from '@angular/forms';
 import { CountryModel } from './country.model';
 import { PhoneNumberModel } from './phone-number.model';
 import { noop } from 'rxjs';
 import * as StringMask from 'string-mask';
 import extractNumbers from './only-numbers';
+import { phoneNumberValidator } from './ngx-country-phone-number.validator';
 // import RandExp from './randexp';
 
 declare var $: any;
@@ -17,14 +18,23 @@ declare var $: any;
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NgxCountryPhoneNumberComponent),
       multi: true
-    }
+    },
+    // {
+    //   provide: NG_VALIDATORS,
+    //   useValue: phoneNumberValidator,
+    //   multi: true,
+    //    deps: [[new Optional(), Location]]
+    // }
   ]
 })
 export class NgxCountryPhoneNumberComponent implements OnInit {
   @Input() maxLength = 8;
   @Input() countryList: Array<CountryModel>;
   @Input() placeholder = '';
+  @Input() placeholderSearch = 'Search';
   @Input() selectedCountry: CountryModel = null;
+  @Input() phoneValidation = true;
+  @Input() id = 'phone';
   value = '';
   countrySearchText = '';
   phoneNumber: PhoneNumberModel;
@@ -37,7 +47,6 @@ export class NgxCountryPhoneNumberComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.countryList)
     this.defaultCountryList = this.countryList;
   }
 
@@ -85,7 +94,7 @@ export class NgxCountryPhoneNumberComponent implements OnInit {
         const formatter = new StringMask(this.selectedCountry.mask);
         this.value = formatter.apply(
           extractNumbers(this.phoneNumber.number, null)
-        ); // +55 (31) 2222-2222 /[1-4]/g
+        );
         this.maxLength = this.selectedCountry.mask.length;
       } else {
         this.phoneNumber = null;
@@ -101,7 +110,6 @@ export class NgxCountryPhoneNumberComponent implements OnInit {
   }
 
   searchCountry() {
-
     if (this.countrySearchText && this.defaultCountryList) {
       this.countryList = this.defaultCountryList.filter(
         item =>
